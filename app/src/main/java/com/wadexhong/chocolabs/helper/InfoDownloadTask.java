@@ -10,11 +10,11 @@ import com.wadexhong.chocolabs.objects.Data;
  * Created by wade8 on 2018/6/27.
  */
 
-public class DownloadTask extends AsyncTask<Void, Void, Cursor> {
+public class InfoDownloadTask extends AsyncTask<Void, Void, Cursor> {
 
     private DownloadCallback mDownloadCallback;
 
-    public DownloadTask(DownloadCallback downloadCallback) {
+    public InfoDownloadTask(DownloadCallback downloadCallback) {
         mDownloadCallback = downloadCallback;
     }
 

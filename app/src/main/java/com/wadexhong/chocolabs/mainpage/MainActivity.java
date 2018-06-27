@@ -13,9 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.wadexhong.chocolabs.R;
-import com.wadexhong.chocolabs.helper.DownloadCallback;
-import com.wadexhong.chocolabs.helper.DownloadTask;
-import com.wadexhong.chocolabs.objects.Data;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 

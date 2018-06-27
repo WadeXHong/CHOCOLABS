@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.wadexhong.chocolabs.Chocolabs;
 import com.wadexhong.chocolabs.R;
 import com.wadexhong.chocolabs.helper.DatabaseHelper;
+import com.wadexhong.chocolabs.helper.LruCacheHelper;
 
 /**
  * Created by wade8 on 2018/6/27.
@@ -65,6 +66,8 @@ public class MainAdapter extends RecyclerView.Adapter {
             mTextViewName.setText(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.NAME)));
             mTextViewRating.setText(Chocolabs.getStringEasy(R.string.rating, mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.RATING))));
             mTextViewCreatedAt.setText(Chocolabs.getStringEasy(R.string.create_at, mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.CREATED_AT))));
+            mImageView.setTag(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.THUMB)));
+            new LruCacheHelper().set(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.THUMB)), mImageView);
         }
     }
 }

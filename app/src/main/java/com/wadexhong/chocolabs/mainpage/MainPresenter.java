@@ -3,8 +3,7 @@ package com.wadexhong.chocolabs.mainpage;
 import android.database.Cursor;
 
 import com.wadexhong.chocolabs.helper.DownloadCallback;
-import com.wadexhong.chocolabs.helper.DownloadTask;
-import com.wadexhong.chocolabs.objects.Data;
+import com.wadexhong.chocolabs.helper.InfoDownloadTask;
 
 /**
  * Created by wade8 on 2018/6/27.
@@ -25,7 +24,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     private void downloadMainData() {
-        new DownloadTask(new DownloadCallback() {
+        new InfoDownloadTask(new DownloadCallback() {
             @Override
             public void onSuccess(Cursor cursor) {
                 mView.refreshUi(cursor);
