@@ -10,10 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.wadexhong.chocolabs.R;
-import com.wadexhong.chocolabs.helper.DownloadCallback;
-import com.wadexhong.chocolabs.helper.DownloadTask;
-import com.wadexhong.chocolabs.helper.JsonHelper;
-import com.wadexhong.chocolabs.objects.Data;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
@@ -31,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         mPresenter = new MainPresenter(this);
 
-        mToolbar = findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
 

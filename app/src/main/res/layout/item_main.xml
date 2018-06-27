@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_main_height"
+    android:padding="@dimen/padding">
+
+    <ImageView
+        android:id="@+id/item_main_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/item_main_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="@dimen/padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_main_imageview">
+
+        <TextView
+            android:id="@+id/item_main_info_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/padding"
+            android:text="Loading..."
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/item_main_info_rating"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_main_info_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="評分：0.0"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/item_main_info_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/item_main_info_name" />
+
+        <TextView
+            android:id="@+id/item_main_info_createtime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="出版日期：%s"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_main_info_name" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
