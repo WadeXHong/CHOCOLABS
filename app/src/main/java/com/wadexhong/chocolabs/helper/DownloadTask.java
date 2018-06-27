@@ -1,14 +1,16 @@
 package com.wadexhong.chocolabs.helper;
 
+import android.database.Cursor;
 import android.os.AsyncTask;
 
+import com.wadexhong.chocolabs.Chocolabs;
 import com.wadexhong.chocolabs.objects.Data;
 
 /**
  * Created by wade8 on 2018/6/27.
  */
 
-public class DownloadTask extends AsyncTask<Void, Void, Data> {
+public class DownloadTask extends AsyncTask<Void, Void, Cursor> {
 
     private DownloadCallback mDownloadCallback;
 
@@ -17,16 +19,22 @@ public class DownloadTask extends AsyncTask<Void, Void, Data> {
     }
 
     @Override
-    protected Data doInBackground(Void... voids) {
-        return new JsonHelper().fetchJson();
+    protected Cursor doInBackground(Void... voids) {
+        Data data = new JsonHelper().fetchJson();
+        if (data != null){
+            Chocolabs.getDatabaseHelper().inputDramas(data.getDramas());
+            Chocolabs.getDatabaseHelper().queryDramas(null);
+        }
+
+        return Chocolabs.getDatabaseHelper().queryDramas(null);
     }
 
     @Override
-    protected void onPostExecute(Data data) {
-        super.onPostExecute(data);
+    protected void onPostExecute(Cursor cursor) {
+        super.onPostExecute(cursor);
 
-        if (data != null) {
-            mDownloadCallback.onSuccess(data);
+        if (cursor != null) {
+            mDownloadCallback.onSuccess(cursor);
         } else {
             mDownloadCallback.onFailure();
         }

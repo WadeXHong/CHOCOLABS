@@ -15,7 +15,7 @@ public class Drama {
     @SerializedName("total_views")
     private long mTotalView;
     @SerializedName("created_at")
-    private String mCreateTime;
+    private String mCreateAt;
     @SerializedName("thumb")
     private String mThumb;
     @SerializedName("rating")
@@ -25,16 +25,16 @@ public class Drama {
         mId = -1;
         mName = "";
         mTotalView = -1;
-        mCreateTime = "";
+        mCreateAt = "";
         mThumb = "";
         mRating = -1;
     }
 
-    public Drama(int id, String name, long totalView, String createTime, String thumb, float rating) {
+    public Drama(int id, String name, long totalView, String createAt, String thumb, float rating) {
         mId = id;
         mName = name;
         mTotalView = totalView;
-        mCreateTime = createTime;
+        mCreateAt = createAt;
         mThumb = thumb;
         mRating = rating;
     }
@@ -63,12 +63,12 @@ public class Drama {
         mTotalView = totalView;
     }
 
-    public String getCreateTime() {
-        return mCreateTime;
+    public String getCreateAt() {
+        return mCreateAt;
     }
 
-    public void setCreateTime(String createTime) {
-        mCreateTime = createTime;
+    public void setCreateAt(String createAt) {
+        mCreateAt = createAt;
     }
 
     public String getThumb() {

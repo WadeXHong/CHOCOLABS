@@ -1,5 +1,7 @@
 package com.wadexhong.chocolabs.helper;
 
+import android.database.Cursor;
+
 import com.wadexhong.chocolabs.objects.Data;
 
 /**
@@ -7,6 +9,6 @@ import com.wadexhong.chocolabs.objects.Data;
  */
 
 public interface DownloadCallback {
-    void onSuccess(Data data);
+    void onSuccess(Cursor cursor);
     void onFailure();
 }

@@ -2,14 +2,20 @@ package com.wadexhong.chocolabs.mainpage;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.wadexhong.chocolabs.R;
+import com.wadexhong.chocolabs.helper.DownloadCallback;
+import com.wadexhong.chocolabs.helper.DownloadTask;
+import com.wadexhong.chocolabs.objects.Data;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
@@ -17,32 +23,27 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private Toolbar mToolbar;
     private SearchView mSearchView;
+    private RecyclerView mRecyclerView;
+    private MainAdapter mMainAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         mPresenter = new MainPresenter(this);
+
+        mRecyclerView = findViewById(R.id.activity_main_recyclerview);
+        mMainAdapter = new MainAdapter();
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        mRecyclerView.setAdapter(mMainAdapter);
+
 
         mToolbar = findViewById(R.id.activity_main_toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
-        //testing used
-//        new DownloadTask(new DownloadCallback() {
-//            @Override
-//            public void onSuccess(Data data) {
-//                data.toString();
-//            }
-//
-//            @Override
-//            public void onFailure() {
-//
-//            }
-//        }).execute();
+        mPresenter.start();
     }
 
     @Override
@@ -71,5 +72,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void setPresenter(MainContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void refreshUi(Cursor cursor) {
+        mMainAdapter.setCursor(cursor);
     }
 }

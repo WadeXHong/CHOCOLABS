@@ -25,8 +25,12 @@ public class Chocolabs extends Application {
         return mContext;
     }
 
-    public static DatabaseHelper getDatabaseHelper(){
+    public static DatabaseHelper getDatabaseHelper() {
         if (mDatabaseHelper == null) mDatabaseHelper = new DatabaseHelper(getAppContext());
         return mDatabaseHelper;
+    }
+
+    public static String getStringEasy(int stringId, Object... formatArgs) {
+        return formatArgs == null ? getAppContext().getResources().getString(stringId) : getAppContext().getResources().getString(stringId, formatArgs);
     }
 }
