@@ -67,7 +67,9 @@ public class MainAdapter extends RecyclerView.Adapter {
             mTextViewRating.setText(Chocolabs.getStringEasy(R.string.rating, mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.RATING))));
             mTextViewCreatedAt.setText(Chocolabs.getStringEasy(R.string.create_at, mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.CREATED_AT))));
             mImageView.setTag(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.THUMB)));
-            new LruCacheHelper().set(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.THUMB)), mImageView);
+            new LruCacheHelper().set(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.THUMB)),
+                      mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.DRAMA_ID)),
+                      mImageView);
         }
     }
 }

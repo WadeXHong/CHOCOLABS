@@ -3,10 +3,14 @@ package com.wadexhong.chocolabs.helper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.wadexhong.chocolabs.Chocolabs;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -18,11 +22,11 @@ import java.util.concurrent.Executors;
 
 public class LruCacheHelper {
 
-    public void set(String url, ImageView imageView) {
+    public void set(String url, String id, ImageView imageView) {
 
         Bitmap bitmap = Chocolabs.getLruCache().get(url);
         if (bitmap == null) {
-            new ImageDownloadTask(url, imageView).executeOnExecutor(Executors.newCachedThreadPool());
+            new ImageDownloadTask(url, id, imageView).executeOnExecutor(Executors.newCachedThreadPool());
         } else {
             if (imageView.getTag() == url) {
                 imageView.setImageBitmap(bitmap);
@@ -31,37 +35,45 @@ public class LruCacheHelper {
     }
 
 
+    public Bitmap getSmallBitmap(String url, String id) {
 
-
-    public Bitmap getSmallBitmap(String url) {
         Bitmap bitmap = null;
-        try {
-            InputStream input = new URL(url).openStream();
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(input, null, options);
-            int height = options.outHeight;
-            int width = options.outWidth;
+        Log.e("tem[", Chocolabs.getAppContext().getFileStreamPath(id+".jpg").length()+"");
+        if (Chocolabs.getAppContext().getFileStreamPath(id+".jpg").length() == 0) {
+            try {
+                InputStream input = new URL(url).openStream();
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeStream(input, null, options);
+                int height = options.outHeight;
+                int width = options.outWidth;
 
-            int inSampleSize = 1;
+                int inSampleSize = 1;
 
-            if (height > 150 || width > 150) {
+                if (height > 150 || width > 150) {
 
-                final int halfHeight = height / 2;
-                final int halfWidth = width / 2;
+                    final int halfHeight = height / 2;
+                    final int halfWidth = width / 2;
 
-                while ((halfHeight / inSampleSize) > 150
-                          && (halfWidth / inSampleSize) > 150) {
-                    inSampleSize += 1;
+                    while ((halfHeight / inSampleSize) > 150
+                              && (halfWidth / inSampleSize) > 150) {
+                        inSampleSize += 1;
+                    }
                 }
-            }
-            input = new URL(url).openStream();
-            options.inJustDecodeBounds = false;
-            options.inSampleSize = inSampleSize;
-            bitmap = BitmapFactory.decodeStream(input, null, options);
+                input = new URL(url).openStream();
+                options.inJustDecodeBounds = false;
+                options.inSampleSize = inSampleSize;
+                bitmap = BitmapFactory.decodeStream(input, null, options);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+                File file = new File(Chocolabs.getAppContext().getFilesDir(), id + ".jpg");
+                FileOutputStream out = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else {
+            bitmap = BitmapFactory.decodeFile(Chocolabs.getAppContext().getFilesDir()+"/"+id+".jpg");
         }
 
         return bitmap;
@@ -71,16 +83,18 @@ public class LruCacheHelper {
     public class ImageDownloadTask extends AsyncTask<Void, Void, Bitmap> {
 
         private String mUrl;
+        private String mId;
         private ImageView mImageView;
 
-        public ImageDownloadTask(String url, ImageView imageView) {
+        public ImageDownloadTask(String url, String id, ImageView imageView) {
             mUrl = url;
+            mId = id;
             mImageView = imageView;
         }
 
         @Override
         protected Bitmap doInBackground(Void... voids) {
-            return getSmallBitmap(mUrl);
+            return getSmallBitmap(mUrl, mId);
         }
 
         @Override
