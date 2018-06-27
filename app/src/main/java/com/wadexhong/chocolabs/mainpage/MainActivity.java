@@ -10,6 +10,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.wadexhong.chocolabs.R;
+import com.wadexhong.chocolabs.helper.DownloadCallback;
+import com.wadexhong.chocolabs.helper.DownloadTask;
+import com.wadexhong.chocolabs.helper.JsonHelper;
+import com.wadexhong.chocolabs.objects.Data;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
@@ -30,6 +34,19 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
+
+        //testing used
+//        new DownloadTask(new DownloadCallback() {
+//            @Override
+//            public void onSuccess(Data data) {
+//                data.toString();
+//            }
+//
+//            @Override
+//            public void onFailure() {
+//
+//            }
+//        }).execute();
     }
 
     @Override
