@@ -14,14 +14,23 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".mainpage.MainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="http"
+                    android:host="www.example.com"
+                    android:pathPrefix="/dramas" />
+            </intent-filter>
         </activity>
-        <activity android:name=".infopage.InfoActivity">
+        <activity android:name=".infopage.InfoActivity"
+            android:launchMode="singleTop">
 
         </activity>
     </application>

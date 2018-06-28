@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,9 @@ import com.wadexhong.chocolabs.R;
 import com.wadexhong.chocolabs.helper.SharedPreferenceHelper;
 import com.wadexhong.chocolabs.infopage.InfoActivity;
 import com.wadexhong.chocolabs.objects.Drama;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
@@ -53,6 +57,29 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
         mPresenter.start();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        setIntent(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        try {
+            Uri uri = getIntent().getData();
+            URL url = new URL(uri.getScheme(), uri.getHost(), uri.getPath());
+            String[] parts = url.toString().split("dramas/");
+            Log.e("URL", parts[1]);
+            transToInfo(parts[1]);
+            setIntent(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -107,9 +134,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mMainAdapter.setCursor(cursor);
     }
 
-    public void transToInfo (Drama drama){
+    public void transToInfo (String dramaId){
         Intent intent = new Intent(this, InfoActivity.class);
-        intent.putExtra("Drama", drama);
+        intent.putExtra("drama_id", dramaId);
 //        android.support.v4.util.Pair<View, String> pair = android.support.v4.util.Pair.create(findViewById(R.id.item_main_imageview), "thumb");
 //        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair);
 //        startActivity(intent, optionsCompat.toBundle());

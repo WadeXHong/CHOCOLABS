@@ -85,7 +85,8 @@ public class MainAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     ((MainActivity)itemView.getContext())
-                              .transToInfo(new Drama(id, name, totalView, createAt, thumb, rating));
+                              .transToInfo(id);
+//                    new Drama(id, name, totalView, createAt, thumb, rating
                 }
             });
         }

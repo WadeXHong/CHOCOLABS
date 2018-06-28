@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -62,6 +63,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else {
             return db.query(TABLE_NAME, null, null, null, null, null, null);
         }
+    }
+
+    public Cursor querySpecificDrama(@NonNull String dramaId) {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(TABLE_NAME, null, DRAMA_ID + " =?", new String[]{dramaId}, null, null, null);
     }
 
     public void inputDramas(List<Drama> dramas) {
