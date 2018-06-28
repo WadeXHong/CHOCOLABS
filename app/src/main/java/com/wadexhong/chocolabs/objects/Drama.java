@@ -2,11 +2,13 @@ package com.wadexhong.chocolabs.objects;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by wade8 on 2018/6/27.
  */
 
-public class Drama {
+public class Drama implements Serializable{
 
     @SerializedName("drama_id")
     private int mId;
@@ -37,6 +39,15 @@ public class Drama {
         mCreateAt = createAt;
         mThumb = thumb;
         mRating = rating;
+    }
+
+    public Drama(String id, String name, String totalView, String createAt, String thumb, String rating) {
+        mId = Integer.parseInt(id);
+        mName = name;
+        mTotalView = Long.parseLong(totalView);
+        mCreateAt = createAt;
+        mThumb = thumb;
+        mRating = Float.parseFloat(rating);
     }
 
     public int getId() {

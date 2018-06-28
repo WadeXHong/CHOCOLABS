@@ -13,6 +13,7 @@ import com.wadexhong.chocolabs.Chocolabs;
 import com.wadexhong.chocolabs.R;
 import com.wadexhong.chocolabs.helper.DatabaseHelper;
 import com.wadexhong.chocolabs.helper.LruCacheHelper;
+import com.wadexhong.chocolabs.objects.Drama;
 
 /**
  * Created by wade8 on 2018/6/27.
@@ -63,15 +64,30 @@ public class MainAdapter extends RecyclerView.Adapter {
 
         private void bind(int position) {
             mCursor.moveToPosition(position);
-            mTextViewName.setText(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.NAME)));
-            mTextViewRating.setText(Chocolabs.getStringEasy(R.string.rating, mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.RATING))));
-            mTextViewCreatedAt.setText(Chocolabs.getStringEasy(R.string.create_at, mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.CREATED_AT))));
 
-            String thumb = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.THUMB));
+            final String id = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.DRAMA_ID));
+            final String name = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.NAME));
+            final String totalView = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.TOTAL_VIEWS));
+            final String createAt = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.CREATED_AT));
+            final String thumb = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.THUMB));
+            final String rating = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.RATING));
+
+            mTextViewName.setText(name);
+            mTextViewRating.setText(Chocolabs.getStringEasy(R.string.rating, rating));
+            mTextViewCreatedAt.setText(Chocolabs.getStringEasy(R.string.create_at, createAt));
+
             mImageView.setTag(thumb);
             new LruCacheHelper().set(thumb,
-                      mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.DRAMA_ID)),
+                      id,
                       mImageView);
+
+            mConstraintLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity)itemView.getContext())
+                              .transToInfo(new Drama(id, name, totalView, createAt, thumb, rating));
+                }
+            });
         }
     }
 }

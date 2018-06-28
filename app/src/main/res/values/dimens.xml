@@ -4,4 +4,5 @@
     <dimen name="item_main_height">300dp</dimen>
     <dimen name="padding">8dp</dimen>
     <dimen name="item_main_imageview_height">200dp</dimen>
+    <dimen name="activity_info_imageview_height">400dp</dimen>
 </resources>

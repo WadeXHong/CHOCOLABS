@@ -68,13 +68,13 @@ public class LruCacheHelper {
 
         int inSampleSize = 1;
 
-        if (height > 150 || width > 150) {
+        if (height > 300 || width > 300) {
 
             final int halfHeight = height / 2;
             final int halfWidth = width / 2;
 
-            while ((halfHeight / inSampleSize) > 150
-                      && (halfWidth / inSampleSize) > 150) {
+            while ((halfHeight / inSampleSize) > 300
+                      && (halfWidth / inSampleSize) > 300) {
                 inSampleSize += 1;
             }
         }

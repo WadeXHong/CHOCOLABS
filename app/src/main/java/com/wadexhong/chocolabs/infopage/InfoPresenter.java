@@ -10,6 +10,7 @@ public class InfoPresenter implements InfoContract.Presenter {
 
     public InfoPresenter(InfoContract.View view) {
         mView = view;
+        mView.setPresenter(this);
     }
 
     @Override

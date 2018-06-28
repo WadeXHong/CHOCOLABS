@@ -2,8 +2,10 @@ package com.wadexhong.chocolabs.mainpage;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,6 +24,8 @@ import android.widget.TextView;
 import com.wadexhong.chocolabs.Chocolabs;
 import com.wadexhong.chocolabs.R;
 import com.wadexhong.chocolabs.helper.SharedPreferenceHelper;
+import com.wadexhong.chocolabs.infopage.InfoActivity;
+import com.wadexhong.chocolabs.objects.Drama;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
@@ -101,5 +105,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void refreshUi(Cursor cursor) {
         mMainAdapter.setCursor(cursor);
+    }
+
+    public void transToInfo (Drama drama){
+        Intent intent = new Intent(this, InfoActivity.class);
+        intent.putExtra("Drama", drama);
+//        android.support.v4.util.Pair<View, String> pair = android.support.v4.util.Pair.create(findViewById(R.id.item_main_imageview), "thumb");
+//        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair);
+//        startActivity(intent, optionsCompat.toBundle());
+        startActivity(intent);
     }
 }
