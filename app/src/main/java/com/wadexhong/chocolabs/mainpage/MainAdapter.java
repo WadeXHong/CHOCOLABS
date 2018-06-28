@@ -20,10 +20,10 @@ import com.wadexhong.chocolabs.helper.LruCacheHelper;
 
 public class MainAdapter extends RecyclerView.Adapter {
 
-
     private Cursor mCursor;
 
     public void setCursor(Cursor cursor) {
+        if (mCursor != null) mCursor.close();
         mCursor = cursor;
         notifyDataSetChanged();
     }
@@ -66,8 +66,10 @@ public class MainAdapter extends RecyclerView.Adapter {
             mTextViewName.setText(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.NAME)));
             mTextViewRating.setText(Chocolabs.getStringEasy(R.string.rating, mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.RATING))));
             mTextViewCreatedAt.setText(Chocolabs.getStringEasy(R.string.create_at, mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.CREATED_AT))));
-            mImageView.setTag(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.THUMB)));
-            new LruCacheHelper().set(mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.THUMB)),
+
+            String thumb = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.THUMB));
+            mImageView.setTag(thumb);
+            new LruCacheHelper().set(thumb,
                       mCursor.getString(mCursor.getColumnIndex(DatabaseHelper.DRAMA_ID)),
                       mImageView);
         }

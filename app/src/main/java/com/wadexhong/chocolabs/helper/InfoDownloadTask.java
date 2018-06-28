@@ -2,6 +2,7 @@ package com.wadexhong.chocolabs.helper;
 
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.wadexhong.chocolabs.Chocolabs;
 import com.wadexhong.chocolabs.objects.Data;
@@ -12,6 +13,7 @@ import com.wadexhong.chocolabs.objects.Data;
 
 public class InfoDownloadTask extends AsyncTask<Void, Void, Cursor> {
 
+    private final static String TAG = InfoDownloadTask.class.getSimpleName();
     private DownloadCallback mDownloadCallback;
 
     public InfoDownloadTask(DownloadCallback downloadCallback) {
@@ -23,7 +25,8 @@ public class InfoDownloadTask extends AsyncTask<Void, Void, Cursor> {
         Data data = new JsonHelper().fetchJson();
         if (data != null){
             Chocolabs.getDatabaseHelper().inputDramas(data.getDramas());
-            Chocolabs.getDatabaseHelper().queryDramas(null);
+        } else {
+            Log.w(TAG, "fetchJson get null !");
         }
 
         return Chocolabs.getDatabaseHelper().queryDramas(null);

@@ -2,6 +2,7 @@ package com.wadexhong.chocolabs.mainpage;
 
 import android.database.Cursor;
 
+import com.wadexhong.chocolabs.Chocolabs;
 import com.wadexhong.chocolabs.helper.DownloadCallback;
 import com.wadexhong.chocolabs.helper.InfoDownloadTask;
 
@@ -16,6 +17,11 @@ public class MainPresenter implements MainContract.Presenter {
     public MainPresenter(MainContract.View view) {
         mView = view;
         mView.setPresenter(this);
+    }
+
+    @Override
+    public void searchDrama(String newText) {
+        mView.refreshUi(Chocolabs.getDatabaseHelper().queryDramas(newText));
     }
 
     @Override

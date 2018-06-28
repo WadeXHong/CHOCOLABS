@@ -23,6 +23,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private RecyclerView mRecyclerView;
     private MainAdapter mMainAdapter;
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +59,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                mPresenter.searchDrama(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                mPresenter.searchDrama(newText);
                 return false;
             }
         });

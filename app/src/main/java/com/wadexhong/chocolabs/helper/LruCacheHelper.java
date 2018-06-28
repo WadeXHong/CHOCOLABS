@@ -10,6 +10,7 @@ import com.wadexhong.chocolabs.Chocolabs;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,46 +29,21 @@ public class LruCacheHelper {
         if (bitmap == null) {
             new ImageDownloadTask(url, id, imageView).executeOnExecutor(Executors.newCachedThreadPool());
         } else {
-            if (imageView.getTag() == url) {
+            if (imageView.getTag().equals(url)) {
                 imageView.setImageBitmap(bitmap);
             }
         }
     }
 
 
-    public Bitmap getSmallBitmap(String url, String id) {
+    public Bitmap getBitmap(String url, String id) {
 
         Bitmap bitmap = null;
         Log.e("tem[", Chocolabs.getAppContext().getFileStreamPath(id+".jpg").length()+"");
         if (Chocolabs.getAppContext().getFileStreamPath(id+".jpg").length() == 0) {
             try {
-                InputStream input = new URL(url).openStream();
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inJustDecodeBounds = true;
-                BitmapFactory.decodeStream(input, null, options);
-                int height = options.outHeight;
-                int width = options.outWidth;
-
-                int inSampleSize = 1;
-
-                if (height > 150 || width > 150) {
-
-                    final int halfHeight = height / 2;
-                    final int halfWidth = width / 2;
-
-                    while ((halfHeight / inSampleSize) > 150
-                              && (halfWidth / inSampleSize) > 150) {
-                        inSampleSize += 1;
-                    }
-                }
-                input = new URL(url).openStream();
-                options.inJustDecodeBounds = false;
-                options.inSampleSize = inSampleSize;
-                bitmap = BitmapFactory.decodeStream(input, null, options);
-
-                File file = new File(Chocolabs.getAppContext().getFilesDir(), id + ".jpg");
-                FileOutputStream out = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                bitmap = cutBitmap(url, bitmap);
+                saveAsJPEG(id, bitmap);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -77,6 +53,39 @@ public class LruCacheHelper {
         }
 
         return bitmap;
+    }
+
+    private Bitmap cutBitmap(String url, Bitmap bitmap) throws IOException {
+        InputStream input = new URL(url).openStream();
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(input, null, options);
+        int height = options.outHeight;
+        int width = options.outWidth;
+
+        int inSampleSize = 1;
+
+        if (height > 150 || width > 150) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            while ((halfHeight / inSampleSize) > 150
+                      && (halfWidth / inSampleSize) > 150) {
+                inSampleSize += 1;
+            }
+        }
+        input = new URL(url).openStream();
+        options.inJustDecodeBounds = false;
+        options.inSampleSize = inSampleSize;
+        bitmap = BitmapFactory.decodeStream(input, null, options);
+        return bitmap;
+    }
+
+    private void saveAsJPEG(String id, Bitmap bitmap) throws FileNotFoundException {
+        File file = new File(Chocolabs.getAppContext().getFilesDir(), id + ".jpg");
+        FileOutputStream out = new FileOutputStream(file);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
     }
 
 
@@ -94,7 +103,7 @@ public class LruCacheHelper {
 
         @Override
         protected Bitmap doInBackground(Void... voids) {
-            return getSmallBitmap(mUrl, mId);
+            return getBitmap(mUrl, mId);
         }
 
         @Override

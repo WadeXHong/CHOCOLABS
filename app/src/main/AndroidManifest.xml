@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wadexhong.chocolabs">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".Chocolabs"
@@ -12,15 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mainpage.MainActivity">
+        <activity
+            android:name=".mainpage.MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".infopage.InfoActivity">
-        </activity>
+        <activity android:name=".infopage.InfoActivity"></activity>
     </application>
 
 </manifest>

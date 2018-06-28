@@ -18,5 +18,6 @@ public interface MainContract {
 
     interface Presenter extends BasePresenter {
 
+        void searchDrama(String newText);
     }
 }
