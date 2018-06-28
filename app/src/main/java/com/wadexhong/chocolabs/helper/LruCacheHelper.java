@@ -23,6 +23,8 @@ import java.util.concurrent.Executors;
 
 public class LruCacheHelper {
 
+    private final static String TAG = LruCacheHelper.class.getSimpleName();
+
     public void set(String url, String id, ImageView imageView) {
 
         Bitmap bitmap = Chocolabs.getLruCache().get(url);
@@ -39,7 +41,8 @@ public class LruCacheHelper {
     public Bitmap getBitmap(String url, String id) {
 
         Bitmap bitmap = null;
-        Log.e("tem[", Chocolabs.getAppContext().getFileStreamPath(id+".jpg").length()+"");
+        Log.d(TAG, id+".jpg, length = " + Chocolabs.getAppContext().getFileStreamPath(id+".jpg").length());
+
         if (Chocolabs.getAppContext().getFileStreamPath(id+".jpg").length() == 0) {
             try {
                 bitmap = cutBitmap(url, bitmap);

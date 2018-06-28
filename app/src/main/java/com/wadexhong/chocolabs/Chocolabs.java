@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.util.LruCache;
 
 import com.wadexhong.chocolabs.helper.DatabaseHelper;
+import com.wadexhong.chocolabs.helper.SharedPreferenceHelper;
 
 /**
  * Created by wade8 on 2018/6/27.
@@ -23,6 +24,7 @@ public class Chocolabs extends Application {
 
         mContext = this;
         initLruCache();
+        SharedPreferenceHelper.init(this);
     }
 
     private void initLruCache() {
