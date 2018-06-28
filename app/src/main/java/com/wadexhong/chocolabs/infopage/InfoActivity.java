@@ -55,8 +55,11 @@ public class InfoActivity extends AppCompatActivity implements InfoContract.View
     protected void onStart() {
         super.onStart();
 
-        String dramaId = getIntent().getStringExtra("drama_id");
-        mPresenter.query(dramaId);
+        if (getIntent() != null) {
+            String dramaId = getIntent().getStringExtra("drama_id");
+            mPresenter.query(dramaId);
+            setIntent(null);
+        }
     }
 
     @Override
