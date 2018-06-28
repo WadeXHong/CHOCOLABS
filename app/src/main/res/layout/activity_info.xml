@@ -13,11 +13,15 @@
 
         <TextView
             android:id="@+id/activity_info_error"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:gravity="center"
             android:textSize="25sp"
-            android:text="沒有資料 :("/>
+            android:text="沒有資料 :("
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageView
             android:id="@+id/activity_info_imageview"
